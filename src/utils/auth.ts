@@ -1,5 +1,5 @@
-import { BASE_URL } from '@/constants';
-import { User } from '@/types';
+import { BASE_URL } from '../constants';
+import { User } from '../types';
 import axios, { AxiosError } from 'axios';
 
 interface ErrorResponse extends Error {
