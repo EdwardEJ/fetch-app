@@ -7,6 +7,7 @@ import { FC, useEffect, useState } from 'react';
 const SearchResults: FC = () => {
 	const {
 		state: { dogSearchResponse },
+		dispatch,
 	} = useDogContext();
 	const [dogs, setDogs] = useState<Dog[]>();
 
@@ -15,7 +16,7 @@ const SearchResults: FC = () => {
 			const response = await axios.post(`${BASE_URL}/dogs`, dogIdArray, {
 				withCredentials: true,
 			});
-
+			console.log('dogSearchResponse', dogSearchResponse);
 			const dogs: Dog[] = response.data;
 			setDogs(dogs);
 			return dogs;
@@ -39,12 +40,42 @@ const SearchResults: FC = () => {
 		if (dogSearchResponse.resultIds.length > 0) {
 			fetchData();
 		}
-	}, [dogSearchResponse]);
+	}, [dogSearchResponse.resultIds]);
+
+	const fetchNextOrPrevDogs = async (url: string) => {
+		try {
+			const response = await axios.get(`${BASE_URL}${url}`, {
+				withCredentials: true,
+			});
+
+			dispatch({
+				type: 'SET_DOG_SEARCH_RESPONSE',
+				payload: response.data,
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const fetchPreviousDogs = () => {
+		if (dogSearchResponse.prev) {
+			fetchNextOrPrevDogs(dogSearchResponse.prev);
+		}
+	};
+
+	const fetchNextDogs = () => {
+		if (dogSearchResponse.next) {
+			fetchNextOrPrevDogs(dogSearchResponse.next);
+		}
+	};
 
 	return (
 		<div className='grid grid-cols-2 gap-2 md:grid-cols-4'>
 			{dogs?.map((d) => (
-				<div className='flex flex-col p-4 gap-2 items-center border border-gray-200 shadow-sm rounded-lg'>
+				<div
+					key={d.id}
+					className='flex flex-col p-4 gap-2 items-center border border-gray-200 shadow-sm rounded-lg'
+				>
 					<img
 						className='h-28 w-28 object-contain'
 						src={d.img}
@@ -70,6 +101,22 @@ const SearchResults: FC = () => {
 					</div>
 				</div>
 			))}
+			<div>
+				<button
+					className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
+					onClick={fetchPreviousDogs}
+					disabled={!dogSearchResponse.prev}
+				>
+					Previous
+				</button>
+				<button
+					className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
+					onClick={fetchNextDogs}
+					disabled={!dogSearchResponse.next}
+				>
+					Next
+				</button>
+			</div>
 		</div>
 	);
 };
