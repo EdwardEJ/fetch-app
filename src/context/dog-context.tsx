@@ -9,7 +9,12 @@ import { reducer } from './reducer';
 import { DogContextProps, State } from './types';
 
 const initialState: State = {
-	dogIdResults: [],
+	dogSearchResponse: {
+		next: null,
+		prev: null,
+		resultIds: [],
+		total: 0,
+	},
 	isLoggedIn: false,
 };
 

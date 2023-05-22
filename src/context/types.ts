@@ -1,13 +1,14 @@
 import { Dispatch } from 'react';
+import { ResponseData } from '../types';
 
 export type State = {
 	isLoggedIn: boolean;
-	dogIdResults: string[];
+	dogSearchResponse: ResponseData;
 };
 
 export type Action =
 	| { type: 'SET_LOGGED_IN'; payload: boolean }
-	| { type: 'SET_RESULT_DOG_IDS'; payload: string[] };
+	| { type: 'SET_DOG_SEARCH_RESPONSE'; payload: ResponseData };
 
 export type DogContextDispatch = Dispatch<Action>;
 

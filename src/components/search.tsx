@@ -3,8 +3,10 @@ import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BASE_URL } from '../constants';
 import { SearchParams } from '../types';
+import { useDogContext } from '../context/dog-context';
 
 const Search: FC = () => {
+	const { dispatch } = useDogContext();
 	const { register, handleSubmit } = useForm<SearchParams>({
 		defaultValues: {
 			breeds: [],
@@ -32,7 +34,11 @@ const Search: FC = () => {
 				withCredentials: true,
 				params: data,
 			});
-			console.log(response.data);
+
+			dispatch({
+				type: 'SET_DOG_SEARCH_RESPONSE',
+				payload: response.data,
+			});
 		} catch (error) {
 			console.error(error);
 		}
