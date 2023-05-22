@@ -1,15 +1,17 @@
-import { useContext } from 'react';
 import './App.css';
 import Login from './components/login';
-import { AuthContext } from './context/AuthContext';
 import Search from './components/search';
+import { useDogContext } from './context/dog-context';
 
 function App() {
-	const { isLoggedIn } = useContext(AuthContext);
-	console.log('isLoggedIn', isLoggedIn);
+	const {
+		state: { isLoggedIn },
+	} = useDogContext();
+	const name = localStorage.getItem('user');
+
 	return (
 		<>
-			<Login />
+			{!isLoggedIn ? <Login /> : <p>Welcome {name}!</p>}
 			{isLoggedIn && <Search />}
 		</>
 	);

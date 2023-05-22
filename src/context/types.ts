@@ -1,18 +1,17 @@
-import { SearchParams } from '@/types';
 import { Dispatch } from 'react';
 
 export type State = {
 	isLoggedIn: boolean;
-	searchParams: SearchParams;
+	dogIdResults: string[];
 };
 
 export type Action =
 	| { type: 'SET_LOGGED_IN'; payload: boolean }
-	| { type: 'SET_SEARCH_PARAMS'; payload: SearchParams };
+	| { type: 'SET_RESULT_DOG_IDS'; payload: string[] };
 
-export type AuthConextDispatch = Dispatch<Action>;
+export type DogContextDispatch = Dispatch<Action>;
 
-export type AuthContextProps = {
+export type DogContextProps = {
 	state: State;
-	dispatch: AuthConextDispatch;
+	dispatch: DogContextDispatch;
 } | null;
