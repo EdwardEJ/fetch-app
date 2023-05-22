@@ -29,12 +29,21 @@ const Search: FC = () => {
 	}, []);
 
 	const onSubmit = async (data: SearchParams) => {
+		console.log('data', data);
+		const formValues = getValues();
+		console.log('formValues.sort?.order', formValues.sort?.order);
+		const modifiedData = {
+			...data,
+			sortOrder: formValues.sort?.order,
+		};
+		// Delete the old sort object
+		delete modifiedData.sort;
+		console.log('modified data', modifiedData);
 		try {
 			const response = await axios.get(`${BASE_URL}/dogs/search`, {
 				withCredentials: true,
-				params: data,
+				params: modifiedData,
 			});
-
 			dispatch({
 				type: 'SET_DOG_SEARCH_RESPONSE',
 				payload: response.data,
@@ -94,6 +103,17 @@ const Search: FC = () => {
 						type='number'
 						min='0'
 					/>
+				</div>
+				<div className='flex flex-col items-start gap-2'>
+					<label className='text-sm'>Sort Order</label>
+					<select
+						className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2'
+						{...register('sort.order')}
+					>
+						<option value=''>-- Select Order --</option>
+						<option value='asc'>Ascending</option>
+						<option value='desc'>Descending</option>
+					</select>
 				</div>
 				<button
 					className='text-sm rounded-md px-4 py-2 text-white bg-blue-500'

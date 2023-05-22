@@ -8,11 +8,17 @@ export interface Error {
 	status: number;
 }
 
+export interface Sort {
+	field: string;
+	order: 'asc' | 'desc';
+}
+
 export interface SearchParams {
 	breeds: string[];
 	zipCodes: string[];
 	minAge: number | null;
 	maxAge: number | null;
+	sort?: Sort;
 }
 
 export interface Dog {
