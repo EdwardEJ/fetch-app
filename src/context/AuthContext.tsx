@@ -7,12 +7,12 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({
 	isLoggedIn: false,
-	setLoggedIn: () => {},
+	setLoggedIn: () => undefined,
 });
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [isLoggedIn, setLoggedIn] = useState(false);
-
+	console.log('provider logged in', isLoggedIn);
 	return (
 		<AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
 			{children}
