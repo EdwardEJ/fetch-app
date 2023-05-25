@@ -1,10 +1,10 @@
-import { FC, FormEvent, useContext, useState } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { login } from '../utils/auth';
+import { FC, FormEvent, useState } from 'react';
+import { useDogContext } from '../context/dog-context';
 import { User } from '../types';
+import { login } from '../utils/auth';
 
 const Login: FC = () => {
-	const { setLoggedIn } = useContext(AuthContext);
+	const { dispatch } = useDogContext();
 	const [credentials, setCredentials] = useState<User>({
 		name: '',
 		email: '',
@@ -17,7 +17,10 @@ const Login: FC = () => {
 		try {
 			const user = await login(credentials.name, credentials.email);
 			if (user) {
-				setLoggedIn(true);
+				dispatch({
+					type: 'SET_LOGGED_IN',
+					payload: true,
+				});
 			}
 		} catch (err) {
 			const errorMessage =
@@ -35,30 +38,44 @@ const Login: FC = () => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit}>
-			<label htmlFor='name'>Name</label>
-			<input
-				type='text'
-				id='name'
-				name='name'
-				placeholder='Enter Name'
-				value={credentials.name}
-				onChange={handleChange}
-				required
-				autoComplete='name'
-			/>
-			<label htmlFor='email'>Email</label>
-			<input
-				type='email'
-				id='email'
-				name='email'
-				placeholder='Enter Email'
-				value={credentials.email}
-				onChange={handleChange}
-				required
-				autoComplete='email'
-			/>
-			<button type='submit' aria-label='Log in'>
+		<form className='flex flex-row gap-4' onSubmit={handleSubmit}>
+			<div className='flex gap-2 items-center'>
+				<label className='text-sm' htmlFor='name'>
+					Name
+				</label>
+				<input
+					className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 placeholder:text-sm'
+					type='text'
+					id='name'
+					name='name'
+					placeholder='Enter Name'
+					value={credentials.name}
+					onChange={handleChange}
+					required
+					autoComplete='name'
+				/>
+			</div>
+			<div className='flex gap-2 items-center'>
+				<label className='text-sm' htmlFor='email'>
+					Email
+				</label>
+				<input
+					className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 placeholder:text-sm'
+					type='email'
+					id='email'
+					name='email'
+					placeholder='Enter Email'
+					value={credentials.email}
+					onChange={handleChange}
+					required
+					autoComplete='email'
+				/>
+			</div>
+			<button
+				className='text-sm rounded-md px-4 py-2 text-white bg-blue-500'
+				type='submit'
+				aria-label='Log in'
+			>
 				Log in
 			</button>
 			{error && <p>{error}</p>}

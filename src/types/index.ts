@@ -8,11 +8,17 @@ export interface Error {
 	status: number;
 }
 
+export interface Sort {
+	field: string;
+	order: 'asc' | 'desc';
+}
+
 export interface SearchParams {
 	breeds: string[];
-	zipCodes: string[];
-	minAge: number | null;
-	maxAge: number | null;
+	zipCodes: string;
+	ageMin: number | null;
+	ageMax: number | null;
+	sort: Sort;
 }
 
 export interface Dog {
@@ -29,4 +35,10 @@ export interface ResponseData {
 	total: number;
 	next: string | null;
 	prev: string | null;
+}
+
+export interface ProcessedData
+	extends Partial<Omit<SearchParams, 'zipCodes' | 'sort'>> {
+	zipCodes?: string[];
+	sort?: string;
 }
