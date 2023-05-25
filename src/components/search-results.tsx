@@ -12,12 +12,14 @@ const SearchResults: FC = () => {
 	const [dogs, setDogs] = useState<Dog[]>();
 
 	const fetchDogs = async (dogIdArray: string[]): Promise<Dog[]> => {
+		console.log('dogIdArray', dogIdArray);
 		try {
 			const response = await axios.post(`${BASE_URL}/dogs`, dogIdArray, {
 				withCredentials: true,
 			});
 			console.log('dogSearchResponse', dogSearchResponse);
 			const dogs: Dog[] = response.data;
+			console.log('dogs', dogs);
 			setDogs(dogs);
 			return dogs;
 		} catch (error) {
