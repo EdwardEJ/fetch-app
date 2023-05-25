@@ -7,7 +7,7 @@ import { FC, useEffect, useState } from 'react';
 const SearchResults: FC = () => {
 	const [disableNextButton, setDisableNextButton] = useState<boolean>(false);
 	const {
-		state: { dogSearchResponse },
+		state: { dogSearchResponse, selectedFavorite },
 		dispatch,
 	} = useDogContext();
 	const [dogs, setDogs] = useState<Dog[]>();
@@ -71,12 +71,29 @@ const SearchResults: FC = () => {
 		}
 	};
 
+	const onClickSelectFavorite = (id: string) => {
+		console.log('id', id);
+		dispatch({
+			type: 'SET_SELECTED_FAVORITES',
+			payload: id,
+		});
+	};
+
+	const isSelected = (id: string) => {
+		const test = selectedFavorite.includes(id);
+		console.log('test', test);
+		return test;
+	};
+
 	return (
 		<div className='grid grid-cols-2 gap-2 md:grid-cols-4'>
 			{dogs?.map((d) => (
-				<div
+				<button
 					key={d.id}
-					className='flex flex-col p-4 gap-2 items-center border border-gray-200 shadow-sm rounded-lg'
+					onClick={() => onClickSelectFavorite(d.id)}
+					className={`flex flex-col p-4 gap-2 items-center border  ${
+						isSelected(d.id) ? 'border-blue-600' : 'border-gray-200'
+					} shadow-sm rounded-lg`}
 				>
 					<img
 						className='h-28 w-28 object-contain'
@@ -101,7 +118,7 @@ const SearchResults: FC = () => {
 							<p className='font-medium'>{d.zip_code}</p>
 						</div>
 					</div>
-				</div>
+				</button>
 			))}
 			<div>
 				<button

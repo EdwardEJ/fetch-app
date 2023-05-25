@@ -16,6 +16,7 @@ const initialState: State = {
 		total: 0,
 	},
 	isLoggedIn: false,
+	selectedFavorite: [],
 };
 
 export const DogStateContext = createContext<DogContextProps>(null);
