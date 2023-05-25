@@ -14,7 +14,7 @@ function App() {
 		<>
 			{!isLoggedIn ? <Login /> : <p>Welcome {name}!</p>}
 			{isLoggedIn && <Search />}
-			{dogSearchResponse && <SearchResults />}
+			{dogSearchResponse && isLoggedIn && <SearchResults />}
 		</>
 	);
 }

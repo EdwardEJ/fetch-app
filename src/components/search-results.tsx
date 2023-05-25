@@ -5,6 +5,7 @@ import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
 
 const SearchResults: FC = () => {
+	const [disableNextButton, setDisableNextButton] = useState<boolean>(false);
 	const {
 		state: { dogSearchResponse },
 		dispatch,
@@ -12,15 +13,11 @@ const SearchResults: FC = () => {
 	const [dogs, setDogs] = useState<Dog[]>();
 
 	const fetchDogs = async (dogIdArray: string[]): Promise<Dog[]> => {
-		console.log('dogIdArray', dogIdArray);
 		try {
 			const response = await axios.post(`${BASE_URL}/dogs`, dogIdArray, {
 				withCredentials: true,
 			});
-			console.log('dogSearchResponse', dogSearchResponse);
 			const dogs: Dog[] = response.data;
-			console.log('dogs', dogs);
-			setDogs(dogs);
 			return dogs;
 		} catch (error) {
 			throw new Error('Failed to fetch dogs');
@@ -28,20 +25,15 @@ const SearchResults: FC = () => {
 	};
 
 	useEffect(() => {
-		console.log('run effect');
 		const fetchData = async () => {
 			try {
 				const dogs = await fetchDogs(dogSearchResponse.resultIds);
-				console.log(dogs);
-				// Update your context/state with the fetched data if necessary
+				setDogs(dogs);
 			} catch (error) {
 				console.error(error);
 			}
 		};
-
-		if (dogSearchResponse.resultIds.length > 0) {
-			fetchData();
-		}
+		fetchData();
 	}, [dogSearchResponse.resultIds]);
 
 	const fetchNextOrPrevDogs = async (url: string) => {
@@ -67,6 +59,14 @@ const SearchResults: FC = () => {
 
 	const fetchNextDogs = () => {
 		if (dogSearchResponse.next) {
+			const fromParam = dogSearchResponse.next.split('&from=')[1];
+			const sizeParam = dogSearchResponse.next.split('&size=')[1];
+
+			const fromValue = parseInt(fromParam);
+			const sizeValue = parseInt(sizeParam);
+
+			const disableNextButton = fromValue + sizeValue > dogSearchResponse.total;
+			setDisableNextButton(disableNextButton);
 			fetchNextOrPrevDogs(dogSearchResponse.next);
 		}
 	};
@@ -114,7 +114,7 @@ const SearchResults: FC = () => {
 				<button
 					className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
 					onClick={fetchNextDogs}
-					disabled={!dogSearchResponse.next}
+					disabled={disableNextButton}
 				>
 					Next
 				</button>

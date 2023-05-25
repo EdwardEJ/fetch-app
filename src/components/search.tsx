@@ -41,7 +41,6 @@ const Search: FC = () => {
 
 	const onSubmit = async (data: Partial<SearchParams>) => {
 		const processedData = handleSubmitData(data);
-		console.log('processedData', processedData);
 		handleDogSearch(processedData);
 	};
 
