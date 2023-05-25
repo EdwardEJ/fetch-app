@@ -8,8 +8,12 @@ export const reducer = (state: State, action: Action): State => {
 			return { ...state, dogSearchResponse: action.payload };
 		case 'SET_SELECTED_FAVORITES':
 			if (state.selectedFavorite.includes(action.payload)) {
-				console.log('action.payload', action.payload);
-				return state;
+				return {
+					...state,
+					selectedFavorite: state.selectedFavorite.filter(
+						(value) => value !== action.payload
+					),
+				};
 			} else {
 				return {
 					...state,
