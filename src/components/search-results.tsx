@@ -1,62 +1,45 @@
-import { BASE_URL } from '../constants';
-import { useDogContext } from '../context/dog-context';
-import { Dog } from '../types';
 import axios from 'axios';
 import { FC, useEffect, useState } from 'react';
+import { BASE_URL } from '../constants';
+import useDogContext from '../context/useDogContext';
+import { Dog } from '../types';
+import fetchDogs from '../utils/fetchDogs';
 
 const SearchResults: FC = () => {
+	const [disableNextButton, setDisableNextButton] = useState<boolean>(false);
 	const {
-		state: { dogSearchResponse },
+		state: { dogSearchResponse, selectedFavorite },
 		dispatch,
 	} = useDogContext();
 	const [dogs, setDogs] = useState<Dog[]>();
 
-	const fetchDogs = async (dogIdArray: string[]): Promise<Dog[]> => {
-		console.log('dogIdArray', dogIdArray);
-		try {
-			const response = await axios.post(`${BASE_URL}/dogs`, dogIdArray, {
-				withCredentials: true,
-			});
-			console.log('dogSearchResponse', dogSearchResponse);
-			const dogs: Dog[] = response.data;
-			console.log('dogs', dogs);
-			setDogs(dogs);
-			return dogs;
-		} catch (error) {
-			throw new Error('Failed to fetch dogs');
-		}
-	};
-
 	useEffect(() => {
-		console.log('run effect');
-		const fetchData = async () => {
-			try {
-				const dogs = await fetchDogs(dogSearchResponse.resultIds);
-				console.log(dogs);
-				// Update your context/state with the fetched data if necessary
-			} catch (error) {
-				console.error(error);
-			}
+		const fetchData = () => {
+			fetchDogs(dogSearchResponse.resultIds)
+				.then((dogsResponse) => {
+					setDogs(dogsResponse);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
 		};
-
-		if (dogSearchResponse.resultIds.length > 0) {
-			fetchData();
-		}
+		fetchData();
 	}, [dogSearchResponse.resultIds]);
 
-	const fetchNextOrPrevDogs = async (url: string) => {
-		try {
-			const response = await axios.get(`${BASE_URL}${url}`, {
+	const fetchNextOrPrevDogs = (url: string) => {
+		axios
+			.get(`${BASE_URL}${url}`, {
 				withCredentials: true,
+			})
+			.then((response) => {
+				dispatch({
+					type: 'SET_DOG_SEARCH_RESPONSE',
+					payload: response.data,
+				});
+			})
+			.catch((error) => {
+				console.error(error);
 			});
-
-			dispatch({
-				type: 'SET_DOG_SEARCH_RESPONSE',
-				payload: response.data,
-			});
-		} catch (error) {
-			console.error(error);
-		}
 	};
 
 	const fetchPreviousDogs = () => {
@@ -67,16 +50,39 @@ const SearchResults: FC = () => {
 
 	const fetchNextDogs = () => {
 		if (dogSearchResponse.next) {
+			const fromParam = dogSearchResponse.next.split('&from=')[1];
+			const sizeParam = dogSearchResponse.next.split('&size=')[1];
+
+			const fromValue = parseInt(fromParam);
+			const sizeValue = parseInt(sizeParam);
+
+			const disableNextButton = fromValue + sizeValue > dogSearchResponse.total;
+			setDisableNextButton(disableNextButton);
 			fetchNextOrPrevDogs(dogSearchResponse.next);
 		}
+	};
+
+	const onClickSelectFavorite = (id: string) => {
+		dispatch({
+			type: 'SET_SELECTED_FAVORITES',
+			payload: id,
+		});
+	};
+
+	const isSelected = (id: string) => {
+		const selected = selectedFavorite.includes(id);
+		return selected;
 	};
 
 	return (
 		<div className='grid grid-cols-2 gap-2 md:grid-cols-4'>
 			{dogs?.map((d) => (
-				<div
+				<button
 					key={d.id}
-					className='flex flex-col p-4 gap-2 items-center border border-gray-200 shadow-sm rounded-lg'
+					onClick={() => onClickSelectFavorite(d.id)}
+					className={`flex flex-col p-4 gap-2 items-center border  ${
+						isSelected(d.id) ? 'border-blue-600' : 'border-gray-200'
+					} shadow-sm rounded-lg`}
 				>
 					<img
 						className='h-28 w-28 object-contain'
@@ -101,7 +107,7 @@ const SearchResults: FC = () => {
 							<p className='font-medium'>{d.zip_code}</p>
 						</div>
 					</div>
-				</div>
+				</button>
 			))}
 			<div>
 				<button
@@ -114,7 +120,7 @@ const SearchResults: FC = () => {
 				<button
 					className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
 					onClick={fetchNextDogs}
-					disabled={!dogSearchResponse.next}
+					disabled={disableNextButton}
 				>
 					Next
 				</button>

@@ -2,9 +2,10 @@ import axios, { AxiosResponse } from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BASE_URL } from '../constants';
-import { useDogContext } from '../context/dog-context';
+
 import { ProcessedData, SearchParams } from '../types';
 import { handleSubmitData } from '../utils/handleSubmitData';
+import useDogContext from '../context/useDogContext';
 
 const Search: FC = () => {
 	const { dispatch } = useDogContext();
@@ -41,7 +42,6 @@ const Search: FC = () => {
 
 	const onSubmit = async (data: Partial<SearchParams>) => {
 		const processedData = handleSubmitData(data);
-		console.log('processedData', processedData);
 		handleDogSearch(processedData);
 	};
 
