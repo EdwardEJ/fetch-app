@@ -15,7 +15,7 @@ const isErrorResponse = (data: unknown): data is ErrorResponse => {
 	return false;
 };
 
-export const login = async (name: string, email: string): Promise<User> => {
+export const login = async ({ name, email }: User): Promise<User> => {
 	try {
 		const res = await axios.post(
 			`${BASE_URL}/auth/login`,
