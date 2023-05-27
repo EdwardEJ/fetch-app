@@ -31,13 +31,20 @@ const Login: FC = () => {
 	};
 
 	return (
-		<form className='flex flex-row gap-4' onSubmit={handleSubmit(onSubmit)}>
+		<form
+			className='flex flex-col h-96 gap-2 border border-gray-200 p-4 rounded-md items-center shadow-sm max-w-screen-sm justify-center'
+			onSubmit={handleSubmit(onSubmit)}
+		>
+			<div className='flex flex-col text-center mb-4'>
+				<h1 className='text-2xl font-semibold'>Welcome to Fetch!</h1>
+				<p>Login to continue and find you next dog companion</p>
+			</div>
 			<div className='flex gap-2 items-center'>
 				<label className='text-sm' htmlFor='name'>
 					Name
 				</label>
 				<input
-					className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 placeholder:text-sm'
+					className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 placeholder:text-sm w-full'
 					type='text'
 					id='name'
 					{...register('name', { required: true })}
@@ -50,7 +57,7 @@ const Login: FC = () => {
 					Email
 				</label>
 				<input
-					className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 placeholder:text-sm'
+					className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 placeholder:text-sm w-full'
 					type='email'
 					id='email'
 					{...register('email', { required: true })}

@@ -47,8 +47,11 @@ const Search: FC = () => {
 
 	return (
 		<>
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className='grid grid-cols-2 gap-4 md:grid-cols-5'>
+			<form
+				className='flex flex-col gap-4 items-center'
+				onSubmit={handleSubmit(onSubmit)}
+			>
+				<div className='grid grid-cols-2 p-4 gap-4 md:grid-cols-5 max-h-[32rem] overflow-scroll shadow-md border rounded-lg'>
 					{breedsData.map((breed, index) => (
 						<div
 							key={index}
@@ -62,69 +65,73 @@ const Search: FC = () => {
 							/>
 							<label
 								htmlFor={breed}
-								className='text-sm text-gray-800 text-left'
+								className='text-xs md:text-sm text-gray-800 text-left'
 							>
 								{breed}
 							</label>
 						</div>
 					))}
 				</div>
-				<div className='flex flex-col items-start gap-2'>
-					<label className='text-sm'>Zip Codes</label>
-					<input
-						className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2'
-						{...register('zipCodes')}
-						type='text'
-						placeholder='Enter Zipcode'
-					/>
-				</div>
-				<div className='flex flex-col items-start gap-2'>
-					<label className='text-sm'>Min Age</label>
-					<input
-						className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2'
-						{...register('ageMin')}
-						type='number'
-						min='0'
-					/>
-				</div>
-				<div className='flex flex-col items-start gap-2'>
-					<label className='text-sm'>Max Age</label>
-					<input
-						className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2'
-						{...register('ageMax')}
-						type='number'
-						min='0'
-					/>
-				</div>
-				<div className='flex flex-col items-start gap-2'>
-					<label className='text-sm'>Sort By</label>
-					<select
-						className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2'
-						{...register('sort.field')}
-					>
-						<option value=''>-- Select Order --</option>
-						<option value='age'>Age</option>
-						<option value='breed'>Breed</option>
-						<option value='name'>Name</option>
-					</select>
-				</div>
-				<div className='flex flex-col items-start gap-2'>
-					<label className='text-sm'>Sort Order</label>
-					<select
-						className='border border-blue-600 rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2'
-						{...register('sort.order')}
-					>
-						<option value=''>-- Select Order --</option>
-						<option value='asc'>Ascending</option>
-						<option value='desc'>Descending</option>
-					</select>
+				<div className='grid grid-cols-2 md:grid-cols-5 gap-2'>
+					<div className='flex flex-col items-start gap-2'>
+						<label className='text-xs md:text-base'>Min Age</label>
+						<input
+							className='border border-blue-600 text-sm md:text-base placeholder:text-xs placeholder:md:text-base  rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+							{...register('ageMin')}
+							type='number'
+							placeholder='Enter a minimum age'
+							min='0'
+						/>
+					</div>
+					<div className='flex flex-col items-start gap-2'>
+						<label className='text-xs md:text-base'>Max Age</label>
+						<input
+							className='border border-blue-600 text-sm md:text-base placeholder:text-xs placeholder:md:text-base  rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+							{...register('ageMax')}
+							type='number'
+							placeholder='Enter a maximum age'
+							min='0'
+						/>
+					</div>
+					<div className='flex flex-col items-start gap-2'>
+						<label className='text-xs md:text-base'>Sort By</label>
+						<select
+							className='border border-blue-600 text-sm md:text-base placeholder:text-xs placeholder:md:text-base  rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+							{...register('sort.field')}
+						>
+							<option value=''>-- Select Order --</option>
+							<option value='age'>Age</option>
+							<option value='breed'>Breed</option>
+							<option value='name'>Name</option>
+						</select>
+					</div>
+					<div className='flex flex-col items-start gap-2'>
+						<label className='text-xs md:text-base'>Sort Order</label>
+						<select
+							className='border border-blue-600 text-sm md:text-base placeholder:text-xs placeholder:md:text-base  rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+							{...register('sort.order')}
+						>
+							<option value=''>-- Select Order --</option>
+							<option value='asc'>Ascending</option>
+							<option value='desc'>Descending</option>
+						</select>
+					</div>
+					<div className='flex flex-col items-start gap-2'>
+						<label className='text-xs md:text-base'>Zip Codes</label>
+						<input
+							className='border border-blue-600 text-sm md:text-base placeholder:text-xs placeholder:md:text-base rounded-md outline-none focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+							{...register('zipCodes')}
+							type='text'
+							placeholder='Enter Zipcode'
+						/>
+					</div>
 				</div>
 				<button
-					className='text-sm rounded-md px-4 py-2 text-white bg-blue-500'
+					className='text-xs md:text-base rounded-md px-4 py-2 text-white bg-blue-500 w-full md:w-28'
 					aria-label='Submit Search Dogs Form'
 					type='submit'
 				>
-					Submit
+					Search
 				</button>
 			</form>
 		</>
