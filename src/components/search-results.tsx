@@ -1,5 +1,5 @@
 import { BASE_URL } from '../constants';
-import { useDogContext } from '../context/dog-context';
+import useDogContext from '../context/useDogContext';
 import { Dog } from '../types';
 import axios from 'axios';
 import { FC, useEffect, useState } from 'react';

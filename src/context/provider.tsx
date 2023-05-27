@@ -1,12 +1,7 @@
-import {
-	FC,
-	PropsWithChildren,
-	createContext,
-	useContext,
-	useReducer,
-} from 'react';
+import { FC, PropsWithChildren, useReducer } from 'react';
 import { reducer } from './reducer';
-import { DogContextProps, State } from './types';
+import { State } from './types';
+import { DogStateContext } from './dog-context-state';
 
 const initialState: State = {
 	dogSearchResponse: {
@@ -18,8 +13,6 @@ const initialState: State = {
 	isLoggedIn: false,
 	selectedFavorite: [],
 };
-
-export const DogStateContext = createContext<DogContextProps>(null);
 
 const DogProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
@@ -33,14 +26,4 @@ const DogProvider: FC<PropsWithChildren> = ({ children }) => {
 	);
 };
 
-function useDogContext() {
-	const context = useContext(DogStateContext);
-
-	if (context === null) {
-		throw new Error('useDogContext must be used within a DogProvider');
-	}
-
-	return context;
-}
-
-export { DogProvider, useDogContext };
+export default DogProvider;

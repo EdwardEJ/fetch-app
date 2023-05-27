@@ -1,7 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
-import { useDogContext } from '../context/dog-context';
 import { User } from '../types';
 import { login } from '../utils/auth';
+import useDogContext from '../context/useDogContext';
 
 const Login: FC = () => {
 	const { dispatch } = useDogContext();

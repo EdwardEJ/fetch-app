@@ -42,3 +42,7 @@ export interface ProcessedData
 	zipCodes?: string[];
 	sort?: string;
 }
+
+export interface Match {
+	match: string;
+}
