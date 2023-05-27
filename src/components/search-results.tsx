@@ -1,8 +1,9 @@
+import axios from 'axios';
+import { FC, useEffect, useState } from 'react';
 import { BASE_URL } from '../constants';
 import useDogContext from '../context/useDogContext';
 import { Dog } from '../types';
-import axios from 'axios';
-import { FC, useEffect, useState } from 'react';
+import fetchDogs from '../utils/fetchDogs';
 
 const SearchResults: FC = () => {
 	const [disableNextButton, setDisableNextButton] = useState<boolean>(false);
@@ -12,23 +13,11 @@ const SearchResults: FC = () => {
 	} = useDogContext();
 	const [dogs, setDogs] = useState<Dog[]>();
 
-	const fetchDogs = async (dogIdArray: string[]): Promise<Dog[]> => {
-		try {
-			const response = await axios.post(`${BASE_URL}/dogs`, dogIdArray, {
-				withCredentials: true,
-			});
-			const dogs: Dog[] = response.data;
-			return dogs;
-		} catch (error) {
-			throw new Error('Failed to fetch dogs');
-		}
-	};
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const dogs = await fetchDogs(dogSearchResponse.resultIds);
-				setDogs(dogs);
+				const dogsResponse = await fetchDogs(dogSearchResponse.resultIds);
+				setDogs(dogsResponse);
 			} catch (error) {
 				console.error(error);
 			}

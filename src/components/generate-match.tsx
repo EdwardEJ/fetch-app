@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import { BASE_URL } from '../constants';
 import useDogContext from '../context/useDogContext';
 import { Dog, Match } from '../types';
+import fetchDogs from '../utils/fetchDogs';
 
 export const GenerateMatch: FC = () => {
 	const [matchedDog, setMatchedDog] = useState<Dog>();
@@ -17,13 +18,10 @@ export const GenerateMatch: FC = () => {
 			})
 			.then((postResponse: AxiosResponse<Match>) => {
 				const postReponseMatch = [postResponse.data.match];
-				console.log('postReponseMatch', postReponseMatch);
-				return axios.post(`${BASE_URL}/dogs`, postReponseMatch, {
-					withCredentials: true,
-				});
+				return fetchDogs(postReponseMatch);
 			})
 			.then((getResponse) => {
-				const dogMatch = getResponse.data[0];
+				const dogMatch = getResponse[0];
 				setMatchedDog(dogMatch);
 			})
 			.catch((error) => {
