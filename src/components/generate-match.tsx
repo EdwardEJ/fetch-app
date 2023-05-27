@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { FC, useState } from 'react';
 import { BASE_URL } from '../constants';
 import useDogContext from '../context/useDogContext';
-import { Dog } from '../types';
+import { Dog, Match } from '../types';
 
 export const GenerateMatch: FC = () => {
 	const [matchedDog, setMatchedDog] = useState<Dog>();
@@ -15,7 +15,7 @@ export const GenerateMatch: FC = () => {
 			.post(`${BASE_URL}/dogs/match`, selectedFavoriteDogID, {
 				withCredentials: true,
 			})
-			.then((postResponse) => {
+			.then((postResponse: AxiosResponse<Match>) => {
 				const postReponseMatch = [postResponse.data.match];
 				console.log('postReponseMatch', postReponseMatch);
 				return axios.post(`${BASE_URL}/dogs`, postReponseMatch, {
@@ -25,7 +25,6 @@ export const GenerateMatch: FC = () => {
 			.then((getResponse) => {
 				const dogMatch = getResponse.data[0];
 				setMatchedDog(dogMatch);
-				console.log('dogMatch', dogMatch);
 			})
 			.catch((error) => {
 				console.error('Catch Error:', error);
