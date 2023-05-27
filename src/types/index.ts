@@ -1,3 +1,5 @@
+import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
+
 export interface User {
 	name: string;
 	email: string;
@@ -45,4 +47,17 @@ export interface ProcessedData
 
 export interface Match {
 	match: string;
+}
+
+export interface InputProps {
+	id: string;
+	name: string;
+	label?: string;
+	type?: HTMLInputTypeAttribute;
+	placeholder?: string;
+	min?: string | number;
+	max?: string | number;
+	value?: string;
+	onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+	className?: string;
 }

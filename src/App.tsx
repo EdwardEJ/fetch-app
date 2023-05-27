@@ -31,7 +31,7 @@ function App() {
 			{!isLoggedIn ? (
 				<Login />
 			) : (
-				<div className='flex justify-end mb-4'>
+				<div className='flex self-end mb-4'>
 					<div className='flex flex-col items-end gap-2'>
 						<p className='text-lg font-semibold'>Welcome {name}!</p>
 						<button className='text-red-500' onClick={handleLogoutClick}>
