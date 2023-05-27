@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, useState } from 'react';
 import { User } from '../types';
 import { login } from '../utils/auth';
 import useDogContext from '../context/useDogContext';

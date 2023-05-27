@@ -14,30 +14,32 @@ const SearchResults: FC = () => {
 	const [dogs, setDogs] = useState<Dog[]>();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const dogsResponse = await fetchDogs(dogSearchResponse.resultIds);
-				setDogs(dogsResponse);
-			} catch (error) {
-				console.error(error);
-			}
+		const fetchData = () => {
+			fetchDogs(dogSearchResponse.resultIds)
+				.then((dogsResponse) => {
+					setDogs(dogsResponse);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
 		};
 		fetchData();
 	}, [dogSearchResponse.resultIds]);
 
-	const fetchNextOrPrevDogs = async (url: string) => {
-		try {
-			const response = await axios.get(`${BASE_URL}${url}`, {
+	const fetchNextOrPrevDogs = (url: string) => {
+		axios
+			.get(`${BASE_URL}${url}`, {
 				withCredentials: true,
+			})
+			.then((response) => {
+				dispatch({
+					type: 'SET_DOG_SEARCH_RESPONSE',
+					payload: response.data,
+				});
+			})
+			.catch((error) => {
+				console.error(error);
 			});
-
-			dispatch({
-				type: 'SET_DOG_SEARCH_RESPONSE',
-				payload: response.data,
-			});
-		} catch (error) {
-			console.error(error);
-		}
 	};
 
 	const fetchPreviousDogs = () => {
@@ -61,7 +63,6 @@ const SearchResults: FC = () => {
 	};
 
 	const onClickSelectFavorite = (id: string) => {
-		console.log('id', id);
 		dispatch({
 			type: 'SET_SELECTED_FAVORITES',
 			payload: id,
@@ -69,9 +70,8 @@ const SearchResults: FC = () => {
 	};
 
 	const isSelected = (id: string) => {
-		const test = selectedFavorite.includes(id);
-		console.log('test', test);
-		return test;
+		const selected = selectedFavorite.includes(id);
+		return selected;
 	};
 
 	return (

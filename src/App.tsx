@@ -13,20 +13,19 @@ function App() {
 	} = useDogContext();
 	const name = localStorage.getItem('user');
 
-	const handleLogoutClick = async () => {
-		try {
-			await logout();
-			dispatch({
-				type: 'SET_LOGGED_IN',
-				payload: false,
+	const handleLogoutClick = () => {
+		logout()
+			.then(() => {
+				dispatch({
+					type: 'SET_LOGGED_IN',
+					payload: false,
+				});
+			})
+			.catch((error) => {
+				console.error(error);
 			});
-		} catch (error) {
-			console.error(error);
-		}
 	};
-	console.log('isLoggedIn', isLoggedIn);
-	const cookies = document.cookie;
-	console.log('cookies', cookies);
+
 	return (
 		<>
 			{!isLoggedIn ? (
