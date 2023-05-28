@@ -28,11 +28,11 @@ export const FormInput = <TFormValues extends Record<string, unknown>>({
 }: FormInputProps<TFormValues>): JSX.Element => {
 	return (
 		<div className='flex flex-col'>
-			<div className='flex justify-between font-medium text-sm'>
-				<label className='text-gray-800'>{label}</label>
-				{required && <span className='text-gray-500 text-sm'>Required</span>}
+			<div className='flex justify-between items-end text-sm'>
+				<label className='font-medium text-gray-800'>{label}</label>
+				{required && <span className='text-gray-500 text-xs'>Required</span>}
 			</div>
-			<div className='flex mt-1'>
+			<div className='flex flex-col mt-1'>
 				<Input
 					id={name}
 					name={name}
@@ -40,7 +40,7 @@ export const FormInput = <TFormValues extends Record<string, unknown>>({
 					placeholder={placeholder}
 					{...(register && register(name, rules))}
 				/>
-				{error && <p className='text-sm text-red-500 mt-1'>{error.message}</p>}
+				{error && <p className='text-xs text-red-400 mt-1'>{error.message}</p>}
 			</div>
 		</div>
 	);

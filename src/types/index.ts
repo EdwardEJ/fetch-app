@@ -1,9 +1,9 @@
 import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
 
-export interface User {
+export type User = {
 	name: string;
 	email: string;
-}
+};
 
 export interface Error {
 	message: string;

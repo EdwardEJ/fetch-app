@@ -27,27 +27,27 @@ function App() {
 	};
 
 	return (
-		<>
+		<div className='flex flex-col justify-between'>
 			{!isLoggedIn ? (
 				<Login />
 			) : (
-				<div className='flex self-end mb-4'>
+				<div className='flex flex-col gap-2 self-end'>
 					<div className='flex flex-col items-end gap-2'>
 						<p className='text-lg font-semibold'>Welcome {name}!</p>
 						<button className='text-red-500' onClick={handleLogoutClick}>
 							Log Out
 						</button>
 					</div>
+					<Search />
+					{dogSearchResponse && (
+						<>
+							<SearchResults />
+							<GenerateMatch />
+						</>
+					)}
 				</div>
 			)}
-			{isLoggedIn && <Search />}
-			{dogSearchResponse && isLoggedIn && (
-				<>
-					<SearchResults />
-					<GenerateMatch />
-				</>
-			)}
-		</>
+		</div>
 	);
 }
 
