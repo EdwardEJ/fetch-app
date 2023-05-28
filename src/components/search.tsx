@@ -100,7 +100,7 @@ const Search: FC = () => {
 						{filteredBreedsData.map((breed, index) => (
 							<div
 								key={index}
-								className='flex gap-2 items-center p-2 rounded-lg border border-gray-200 shadow-sm '
+								className='flex gap-2 items-center p-2 rounded-lg border bg-white border-purple-400 shadow-sm '
 							>
 								<input
 									id={breed}

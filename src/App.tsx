@@ -1,4 +1,5 @@
 import './App.css';
+import { useEnterAnimation } from './animations/useEnterAnimation';
 import { GenerateMatch } from './components/generate-match';
 import Login from './components/login';
 import Search from './components/search';
@@ -12,7 +13,7 @@ function App() {
 		dispatch,
 	} = useDogContext();
 	const name = localStorage.getItem('user');
-
+	const shouldAnimate = useEnterAnimation();
 	const handleLogoutClick = () => {
 		logout()
 			.then(() => {
@@ -31,7 +32,11 @@ function App() {
 			{!isLoggedIn ? (
 				<Login />
 			) : (
-				<div className='flex flex-col gap-2 self-end'>
+				<div
+					className={`enter flex flex-col gap-2 self-end ${
+						shouldAnimate && 'app-enter'
+					}`}
+				>
 					<div className='flex flex-col items-end gap-2'>
 						<p className='text-lg font-semibold'>Welcome {name}!</p>
 						<button className='text-red-500' onClick={handleLogoutClick}>

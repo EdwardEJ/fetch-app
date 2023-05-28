@@ -4,6 +4,7 @@ import { login } from '../utils/auth';
 import useDogContext from '../context/useDogContext';
 import { useForm } from 'react-hook-form';
 import { FormInput } from './form-input';
+import { useEnterAnimation } from '../animations/useEnterAnimation';
 
 const Login: FC = () => {
 	const { dispatch } = useDogContext();
@@ -13,6 +14,7 @@ const Login: FC = () => {
 		formState: { errors },
 	} = useForm<User>();
 	const [error, setError] = useState('');
+	const shouldAnimate = useEnterAnimation();
 
 	const onSubmit = (data: User) => {
 		login({ name: data.name, email: data.email })
@@ -31,16 +33,20 @@ const Login: FC = () => {
 			});
 	};
 
-	console.log('errors', errors);
-
 	return (
 		<form
-			className='flex flex-col h-96 gap-2 border border-gray-200 p-4 rounded-md shadow-sm max-w-screen-sm justify-center'
+			className={`flex flex-col h-96 gap-2 border border-gray-200 p-4 rounded-md shadow-sm max-w-screen-sm justify-center ${
+				shouldAnimate ? 'login-enter' : 'opacity-0 -translate-y-8'
+			}`}
 			onSubmit={handleSubmit(onSubmit)}
 		>
 			<div className='flex flex-col text-center mb-4'>
-				<h1 className='text-2xl font-semibold'>Welcome to Fetch!</h1>
-				<p>Login to continue and find you next dog companion</p>
+				<h1 className='text-2xl font-semibold text-indigo-800'>
+					Welcome to Fetch!
+				</h1>
+				<p className='text-white'>
+					Login to continue and find you next dog companion
+				</p>
 			</div>
 			<FormInput
 				id='name'
