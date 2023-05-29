@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://frontend-take-home-service.fetch.com';
+export const BASE_URL = import.meta.env.VITE_APP_URL;
