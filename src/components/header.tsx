@@ -1,15 +1,29 @@
 import { FC } from 'react';
 import useDogContext from '../context/useDogContext';
-import { useLogoutClick } from '../utils/useLogoutclick';
+import { logout } from '../utils/auth';
 
 export const Header: FC = () => {
 	const {
 		state: { userInfo },
+		dispatch,
 	} = useDogContext();
 	const firstName = userInfo.name.split(' ')[0];
 
+	const handleLogout = () => {
+		return logout()
+			.then(() => {
+				dispatch({
+					type: 'SET_LOGGED_IN',
+					payload: false,
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
+
 	return (
-		<div className='flex justify-between'>
+		<div className='flex justify-between '>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				xmlnsXlink='http://www.w3.org/1999/xlink'
@@ -40,7 +54,7 @@ export const Header: FC = () => {
 				<p className='text-gray-800 text-lg font-semibold'>
 					Welcome {firstName}!
 				</p>
-				<button className='font-medium text-red-800' onClick={useLogoutClick}>
+				<button className='font-medium text-red-800' onClick={handleLogout}>
 					Log Out
 				</button>
 			</div>

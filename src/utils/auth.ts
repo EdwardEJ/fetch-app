@@ -32,15 +32,8 @@ export const login = ({ name, email }: User): Promise<User> => {
 				alert('Data submitted successfully');
 			}
 
-			// Simulate saving user data to client-side storage
-			// Would be better to set up a provider, but if the user refreshes the page, data stored in React state is lost.
 			const userData: User = res.data;
 
-			if (userData) {
-				localStorage.setItem('user', JSON.stringify(name));
-			}
-
-			// Return the user data
 			return userData;
 		})
 		.catch((error) => {
