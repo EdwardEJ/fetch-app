@@ -19,7 +19,7 @@ function App() {
 				<Login />
 			) : (
 				<div
-					className={`flex flex-col flex-1 gap-2 md:w-2/3 md:m-auto ${
+					className={`flex flex-col flex-1 gap-2 md:w-fit md:m-auto ${
 						shouldAnimate && 'app-enter'
 					}`}
 				>
