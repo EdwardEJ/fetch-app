@@ -24,7 +24,7 @@ const Input: FC<InputProps> = forwardRef<HTMLInputElement, InputProps>(
 				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
-				className={`border border-gray-300 shadow-sm text-sm placeholder:text-sm rounded-md focus:border-blue-600 hover:border-blue-600 outline-none outline-transparent placeholder-gray-500 py-1 px-2 w-full ${className}`}
+				className={`border border-gray-300 text-gray-800 bg-white shadow-sm text-sm placeholder:text-sm rounded-md focus:border-blue-600 hover:border-blue-600 outline-none outline placeholder-gray-500 py-1 px-2 w-full ${className}`}
 				{...props}
 			/>
 		);

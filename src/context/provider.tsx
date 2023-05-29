@@ -11,6 +11,10 @@ const initialState: State = {
 		total: 0,
 	},
 	isLoggedIn: false,
+	userInfo: {
+		name: '',
+		email: '',
+	},
 	selectedFavorite: [],
 };
 

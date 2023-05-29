@@ -8,6 +8,8 @@ export const reducer = (state: State, action: Action): State => {
 			return { ...state, isLoggedIn: action.payload };
 		case DOG_CONTEXT_ACTIONS.SET_DOG_SEARCH_RESPONSE:
 			return { ...state, dogSearchResponse: action.payload };
+		case DOG_CONTEXT_ACTIONS.SET_USER_INFO:
+			return { ...state, userInfo: action.payload };
 		case DOG_CONTEXT_ACTIONS.SET_SELECTED_FAVORITES:
 			return {
 				...state,

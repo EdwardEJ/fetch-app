@@ -24,6 +24,10 @@ const Login: FC = () => {
 						type: 'SET_LOGGED_IN',
 						payload: true,
 					});
+					dispatch({
+						type: 'SET_USER_INFO',
+						payload: data,
+					});
 				}
 			})
 			.catch((err) => {
@@ -35,7 +39,7 @@ const Login: FC = () => {
 
 	return (
 		<form
-			className={`flex flex-col h-96 gap-2 border border-gray-200 p-4 rounded-md shadow-sm max-w-screen-sm justify-center ${
+			className={`flex flex-col h-96 gap-2 border border-gray-200 p-4 rounded-md shadow-sm max-w-screen-sm justify-center m-auto ${
 				shouldAnimate ? 'login-enter' : 'opacity-0 -translate-y-8'
 			}`}
 			onSubmit={handleSubmit(onSubmit)}
