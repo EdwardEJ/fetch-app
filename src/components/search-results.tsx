@@ -69,9 +69,8 @@ const SearchResults: FC = () => {
 		});
 	};
 
-	const isSelected = (id: string) => {
-		const selected = selectedFavorite.includes(id);
-		return selected;
+	const onClickIsFavorited = (id: string) => {
+		return selectedFavorite.includes(id);
 	};
 
 	return (
@@ -81,7 +80,7 @@ const SearchResults: FC = () => {
 					key={d.id}
 					onClick={() => onClickSelectFavorite(d.id)}
 					className={`flex flex-col p-4 gap-2 items-center border  ${
-						isSelected(d.id) ? 'border-blue-600' : 'border-gray-200'
+						onClickIsFavorited(d.id) ? 'border-blue-600' : 'border-gray-200'
 					} shadow-sm rounded-lg`}
 				>
 					<img

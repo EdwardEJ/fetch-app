@@ -1,47 +1,37 @@
 import './App.css';
+import { useEnterAnimation } from './animations/useEnterAnimation';
 import { GenerateMatch } from './components/generate-match';
+import { Header } from './components/header';
 import Login from './components/login';
 import Search from './components/search';
 import SearchResults from './components/search-results';
 import useDogContext from './context/useDogContext';
-import { logout } from './utils/auth';
 
 function App() {
 	const {
 		state: { isLoggedIn, dogSearchResponse },
-		dispatch,
 	} = useDogContext();
-	const name = localStorage.getItem('user');
-
-	const handleLogoutClick = () => {
-		logout()
-			.then(() => {
-				dispatch({
-					type: 'SET_LOGGED_IN',
-					payload: false,
-				});
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
+	const shouldAnimate = useEnterAnimation();
 
 	return (
 		<>
 			{!isLoggedIn ? (
 				<Login />
 			) : (
-				<>
-					<p>Welcome {name}!</p>
-					<button onClick={handleLogoutClick}>Log Out</button>
-				</>
-			)}
-			{isLoggedIn && <Search />}
-			{dogSearchResponse && isLoggedIn && (
-				<>
-					<SearchResults />
-					<GenerateMatch />
-				</>
+				<div
+					className={`enter flex flex-col gap-2 self-end w-full ${
+						shouldAnimate && 'app-enter'
+					}`}
+				>
+					<Header />
+					<Search />
+					{dogSearchResponse.resultIds.length > 0 && (
+						<>
+							<SearchResults />
+						</>
+					)}
+					{/* <GenerateMatch /> */}
+				</div>
 			)}
 		</>
 	);
