@@ -10,12 +10,10 @@ import Input from './input';
 import { FormInput } from './form-input';
 import { scrollToTop } from '../utils/scrollToTop';
 import { useCollapseOnScroll } from '../utils/useCollapseOnScroll';
+import { GenerateMatchButton } from './generate-match-button';
 
 const Search: FC = () => {
-	const {
-		state: { selectedFavorite },
-		dispatch,
-	} = useDogContext();
+	const { dispatch } = useDogContext();
 	const { register, handleSubmit } = useForm<Partial<SearchParams>>();
 	const [breedsData, setBreedsData] = useState<string[]>([]);
 	const [filterText, setFilterText] = useState('');
@@ -72,8 +70,6 @@ const Search: FC = () => {
 		setIsOpen(!isCollapsed);
 	}, [isCollapsed]);
 
-	const showGenerateMatchButton = selectedFavorite.length >= 2;
-	console.log('showGenerateMatchButton', showGenerateMatchButton);
 	return (
 		<div className='flex flex-col gap-2 pt-1 px-4 -mx-4 flex-1 sticky top-0 bg-[#d4b8e1]'>
 			<div className='flex gap-2'>
@@ -83,19 +79,7 @@ const Search: FC = () => {
 				>
 					{isOpen ? 'Close Search' : 'Open Search'}
 				</button>
-				{showGenerateMatchButton && (
-					<button className='border border-blue-200 rounded-lg py-2 px-4 bg-blue-500 text-white text-sm fade-in sparkle'>
-						Unleash the perfect match!
-					</button>
-				)}
-				{!showGenerateMatchButton && (
-					<button
-						disabled
-						className='border border-blue-200 rounded-lg py-2 px-4 bg-blue-500 text-white text-sm fade-out'
-					>
-						Unleash the perfect match!
-					</button>
-				)}
+				<GenerateMatchButton />
 			</div>
 			<div className='overflow-hidden'>
 				<form
