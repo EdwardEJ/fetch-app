@@ -9,7 +9,7 @@ import useDogContext from './context/useDogContext';
 
 function App() {
 	const {
-		state: { isLoggedIn, dogSearchResponse },
+		state: { isLoggedIn, dogSearchResponse, matchedDog },
 	} = useDogContext();
 	const shouldAnimate = useEnterAnimation();
 
@@ -19,20 +19,21 @@ function App() {
 				<Login />
 			) : (
 				<div
-					className={`flex flex-col gap-2 m-auto ${
+					className={`flex flex-col flex-1 gap-2 md:w-2/3 md:m-auto ${
 						shouldAnimate && 'app-enter'
 					}`}
 				>
 					<Header />
 					<div className='relative'>
-						<Search />
-						{dogSearchResponse.resultIds.length > 0 && (
+						{matchedDog.name === '' ? (
 							<>
-								<SearchResults />
+								<Search />
+								{dogSearchResponse.resultIds.length > 0 && <SearchResults />}
 							</>
+						) : (
+							<GenerateMatch />
 						)}
 					</div>
-					{/* <GenerateMatch /> */}
 				</div>
 			)}
 		</>

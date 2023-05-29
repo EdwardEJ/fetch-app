@@ -17,7 +17,8 @@ const Search: FC = () => {
 	const { register, handleSubmit } = useForm<Partial<SearchParams>>();
 	const [breedsData, setBreedsData] = useState<string[]>([]);
 	const [filterText, setFilterText] = useState('');
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState<boolean>(true);
+	const isCollapsed = useCollapseOnScroll();
 
 	useEffect(() => {
 		axios
@@ -65,7 +66,6 @@ const Search: FC = () => {
 		scrollToTop();
 	};
 
-	const isCollapsed = useCollapseOnScroll();
 	useEffect(() => {
 		setIsOpen(!isCollapsed);
 	}, [isCollapsed]);

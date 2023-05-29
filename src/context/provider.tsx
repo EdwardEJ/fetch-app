@@ -16,6 +16,14 @@ const initialState: State = {
 		email: '',
 	},
 	selectedFavorite: [],
+	matchedDog: {
+		age: 0,
+		breed: '',
+		id: '',
+		img: '',
+		name: '',
+		zip_code: '',
+	},
 };
 
 const DogProvider: FC<PropsWithChildren> = ({ children }) => {

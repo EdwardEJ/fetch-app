@@ -18,6 +18,8 @@ export const reducer = (state: State, action: Action): State => {
 					action.payload
 				),
 			};
+		case DOG_CONTEXT_ACTIONS.SET_MATCHED_DOG:
+			return { ...state, matchedDog: action.payload };
 		default:
 			return state;
 	}
