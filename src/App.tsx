@@ -19,17 +19,19 @@ function App() {
 				<Login />
 			) : (
 				<div
-					className={`enter flex flex-col gap-2 self-end w-full ${
+					className={`flex flex-col gap-2 m-auto ${
 						shouldAnimate && 'app-enter'
 					}`}
 				>
 					<Header />
-					<Search />
-					{dogSearchResponse.resultIds.length > 0 && (
-						<>
-							<SearchResults />
-						</>
-					)}
+					<div className='relative'>
+						<Search />
+						{dogSearchResponse.resultIds.length > 0 && (
+							<>
+								<SearchResults />
+							</>
+						)}
+					</div>
 					{/* <GenerateMatch /> */}
 				</div>
 			)}
