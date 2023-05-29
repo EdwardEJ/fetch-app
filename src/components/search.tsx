@@ -8,6 +8,8 @@ import { handleSubmitData } from '../utils/handleSubmitData';
 import useDogContext from '../context/useDogContext';
 import Input from './input';
 import { FormInput } from './form-input';
+import { scrollToTop } from '../utils/scrollToTop';
+import { useCollapseOnScroll } from '../utils/useCollapseOnScroll';
 
 const Search: FC = () => {
 	const {
@@ -62,12 +64,18 @@ const Search: FC = () => {
 
 	const handleToggle = () => {
 		setIsOpen(!isOpen);
+		scrollToTop();
 	};
+
+	const isCollapsed = useCollapseOnScroll();
+	useEffect(() => {
+		setIsOpen(!isCollapsed);
+	}, [isCollapsed]);
 
 	const collapseOnShowResults = isOpen && dogSearchResponse.resultIds;
 
 	return (
-		<div className='flex flex-col gap-2 my-2 flex-1'>
+		<div className='flex flex-col gap-2 pt-1 px-4 -mx-4 flex-1 sticky top-0 bg-[#d4b8e1]'>
 			<button
 				className='border rounded-lg border-green-200 py-2 px-4 bg-green-500 text-white text-sm w-fit '
 				onClick={handleToggle}
