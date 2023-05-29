@@ -67,7 +67,7 @@ const Search: FC = () => {
 	const collapseOnShowResults = isOpen && dogSearchResponse.resultIds;
 
 	return (
-		<div className='flex flex-col gap-2 my-2'>
+		<div className='flex flex-col gap-2 my-2 flex-1'>
 			<button
 				className='border rounded-lg border-green-200 py-2 px-4 bg-green-500 text-white text-sm w-fit '
 				onClick={handleToggle}
@@ -77,12 +77,12 @@ const Search: FC = () => {
 			<div className='overflow-hidden'>
 				<form
 					className={`flex flex-col gap-4 transition-all duration-300 ${
-						collapseOnShowResults ? 'max-h-[35rem]' : 'max-h-0'
+						collapseOnShowResults ? 'max-h-[38rem]' : 'max-h-0'
 					}`}
 					onSubmit={handleSubmit(onSubmit)}
 				>
-					<div className='grid grid-cols-2 p-4 gap-4 md:grid-cols-5  overflow-scroll no-scrollbar shadow-md border rounded-lg'>
-						<div className=' col-span-full flex justify-between text-sm'>
+					<div className='grid grid-cols-2 p-4 gap-4 md:grid-cols-5 overflow-scroll no-scrollbar shadow-md border rounded-lg'>
+						<div className='col-span-full flex justify-between text-sm'>
 							<label
 								htmlFor='filteredBreed'
 								className='font-medium text-gray-800 text-left'
@@ -100,7 +100,7 @@ const Search: FC = () => {
 						{filteredBreedsData.map((breed, index) => (
 							<div
 								key={index}
-								className='flex gap-2 items-center p-2 rounded-lg border bg-white border-purple-400 shadow-sm '
+								className='flex gap-2 items-center p-2 rounded-lg border bg-white border-purple-400 shadow-sm'
 							>
 								<input
 									id={breed}
@@ -136,12 +136,12 @@ const Search: FC = () => {
 							min='0'
 							register={register}
 						/>
-						<div className='flex flex-col items-start gap-2'>
+						<div className='flex flex-col'>
 							<label className='font-medium text-sm text-gray-800'>
 								Sort By
 							</label>
 							<select
-								className='border border-gray-300 shadow-sm text-sm md:text-base placeholder:text-xs placeholder:md:text-base  rounded-md focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+								className='border border-gray-300 shadow-sm text-sm rounded-md focus:border-blue-600 placeholder-gray-500 py-1 px-2 mt-1 w-full'
 								{...register('sort.field')}
 							>
 								<option value=''>-- Select Order --</option>
@@ -150,12 +150,12 @@ const Search: FC = () => {
 								<option value='name'>Name</option>
 							</select>
 						</div>
-						<div className='flex flex-col items-start gap-2'>
+						<div className='flex flex-col'>
 							<label className='font-medium text-sm text-gray-800'>
 								Sort Order
 							</label>
 							<select
-								className='border border-gray-300 text-sm md:text-base placeholder:text-xs placeholder:md:text-base  rounded-md focus:border-blue-600 placeholder-gray-500 py-1 px-2 w-full'
+								className='border border-gray-300 text-sm  rounded-md focus:border-blue-600 placeholder-gray-500 py-1 px-2 mt-1 w-full'
 								{...register('sort.order')}
 							>
 								<option value=''>-- Select Order --</option>

@@ -25,12 +25,12 @@ function App() {
 				>
 					<Header />
 					<Search />
-					{dogSearchResponse && (
+					{dogSearchResponse.resultIds.length > 0 && (
 						<>
 							<SearchResults />
-							<GenerateMatch />
 						</>
 					)}
+					{/* <GenerateMatch /> */}
 				</div>
 			)}
 		</>
