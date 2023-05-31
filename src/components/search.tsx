@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BASE_URL } from '../constants';
@@ -12,6 +12,7 @@ import { scrollToTop } from '../utils/scrollToTop';
 import { useCollapseOnScroll } from '../utils/useCollapseOnScroll';
 import { GenerateMatchButton } from './generate-match-button';
 import { Alert } from './alert';
+import { isErrorResponse } from '../utils/auth';
 
 const Search: FC = () => {
 	const { dispatch } = useDogContext();
@@ -29,9 +30,12 @@ const Search: FC = () => {
 				setBreedsData(response.data);
 			})
 			.catch((err) => {
-				const errorMessage =
-					(err as Error).message || 'An error occurred while logging in.';
-				setError(errorMessage);
+				const axiosError = err as AxiosError;
+
+				if (axiosError.response && isErrorResponse(axiosError.response.data)) {
+					setError(axiosError.response.data.message);
+					throw new Error(axiosError.response.data.message);
+				}
 			});
 	}, []);
 
