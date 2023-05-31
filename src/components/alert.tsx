@@ -11,11 +11,6 @@ export const Alert: FC<AlertProps> = ({
 	description,
 	alert,
 }: AlertProps) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-
-	const close = () => {
-		setIsOpen(false);
-	};
 	const alertColor =
 		{
 			success: {
