@@ -31,7 +31,7 @@ const Search: FC = () => {
 			})
 			.catch((err) => {
 				const axiosError = err as AxiosError;
-
+				console.log(axiosError);
 				if (axiosError.response && isErrorResponse(axiosError.response.data)) {
 					setError(axiosError.response.data.message);
 					throw new Error(axiosError.response.data.message);
@@ -80,7 +80,13 @@ const Search: FC = () => {
 
 	return (
 		<>
-			<Alert title='Error Fetching Breeds' description={error} alert='danger' />
+			{error && (
+				<Alert
+					title='Error Fetching Breeds'
+					description={error}
+					alert='danger'
+				/>
+			)}
 			<div className='flex flex-col gap-2 pt-1 px-4 -mx-4 flex-1 sticky top-0 bg-[#d4b8e1]'>
 				<div className='flex gap-2'>
 					<button
