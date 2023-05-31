@@ -6,7 +6,7 @@ interface ErrorResponse extends Error {
 	message: string;
 }
 
-const isErrorResponse = (data: unknown): data is ErrorResponse => {
+export const isErrorResponse = (data: unknown): data is ErrorResponse => {
 	if (typeof data === 'object' && data !== null) {
 		return (
 			'message' in data && typeof (data as ErrorResponse).message === 'string'
