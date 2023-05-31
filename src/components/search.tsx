@@ -87,6 +87,11 @@ const Search: FC = () => {
 					alert='danger'
 				/>
 			)}
+			<div className='grid grid-cols-2 p-4 gap-4 md:grid-cols-5'>
+				{breedsData.map((b) => (
+					<p className='text-lg font-medium'>{b}</p>
+				))}
+			</div>
 			<div className='flex flex-col gap-2 pt-1 px-4 -mx-4 flex-1 sticky top-0 bg-[#d4b8e1]'>
 				<div className='flex gap-2'>
 					<button
