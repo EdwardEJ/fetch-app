@@ -5,6 +5,7 @@ import useDogContext from '../context/useDogContext';
 import { useForm } from 'react-hook-form';
 import { FormInput } from './form-input';
 import { useEnterAnimation } from '../animations/useEnterAnimation';
+import { Alert } from './alert';
 
 const Login: FC = () => {
 	const { dispatch } = useDogContext();
@@ -84,7 +85,9 @@ const Login: FC = () => {
 			>
 				Log in
 			</button>
-			{error && <p>{error}</p>}
+			{error && (
+				<Alert title='Error Title' description={error} alert='danger' />
+			)}
 		</form>
 	);
 };
