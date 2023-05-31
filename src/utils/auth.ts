@@ -25,6 +25,9 @@ export const login = ({ name, email }: User): Promise<User> => {
 			},
 			{
 				withCredentials: true,
+				headers: {
+					'Set-Cookie': 'cookieName=value; SameSite=None; Secure',
+				},
 			}
 		)
 		.then((res) => {
