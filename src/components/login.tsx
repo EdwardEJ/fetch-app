@@ -45,6 +45,9 @@ const Login: FC = () => {
 			}`}
 			onSubmit={handleSubmit(onSubmit)}
 		>
+			{!!error && (
+				<Alert title='Login Error' description={error} alert='danger' />
+			)}
 			<div className='flex flex-col text-center mb-4'>
 				<h1 className='text-2xl font-semibold text-indigo-800'>
 					Welcome to Fetch!
@@ -85,9 +88,6 @@ const Login: FC = () => {
 			>
 				Log in
 			</button>
-			{error && (
-				<Alert title='Error Title' description={error} alert='danger' />
-			)}
 		</form>
 	);
 };

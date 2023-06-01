@@ -88,7 +88,7 @@ const SearchResults: FC = () => {
 					<button
 						key={d.id}
 						onClick={() => onClickSelectFavorite(d.id)}
-						className={`flex flex-col p-3 gap-2 items-center border  ${
+						className={`flex flex-col p-3 gap-2 items-center border ${
 							onClickIsFavorited(d.id) ? 'border-blue-600' : 'border-gray-200'
 						} shadow-sm rounded-lg`}
 					>
@@ -120,14 +120,14 @@ const SearchResults: FC = () => {
 				<div></div>
 				<div className='flex gap-2 justify-end col-span-full sticky bottom-0 py-1 px-4 -mx-4 bg-[#d4b8e1]'>
 					<button
-						className='text-xs rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
+						className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
 						onClick={fetchPreviousDogs}
 						disabled={!dogSearchResponse.prev}
 					>
 						Previous
 					</button>
 					<button
-						className='text-xs rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
+						className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
 						onClick={fetchNextDogs}
 						disabled={disableNextButton}
 					>
