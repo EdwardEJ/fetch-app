@@ -21,6 +21,8 @@ export interface SearchParams {
 	ageMin: number | null;
 	ageMax: number | null;
 	sort: Sort;
+	size: number;
+	from: number;
 }
 
 export interface Dog {
@@ -35,8 +37,8 @@ export interface Dog {
 export interface ResponseData {
 	resultIds: string[];
 	total: number;
-	next: string | null;
-	prev: string | null;
+	next: string;
+	prev: string;
 }
 
 export interface ProcessedData

@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { FC, useEffect, useState } from 'react';
 import { BASE_URL } from '../constants';
 import useDogContext from '../context/useDogContext';
-import { Dog } from '../types';
+import { Dog, ResponseData } from '../types';
 import fetchDogs from '../utils/fetchDogs';
 import { scrollToTop } from '../utils/scrollToTop';
 
@@ -28,11 +28,19 @@ const SearchResults: FC = () => {
 	}, [dogSearchResponse.resultIds]);
 
 	const fetchNextOrPrevDogs = (url: string) => {
+		scrollToTop();
+
 		axios
 			.get(`${BASE_URL}${url}`, {
 				withCredentials: true,
 			})
-			.then((response) => {
+			.then((response: AxiosResponse<ResponseData>) => {
+				const limit = response?.data?.next?.split('&from=')[1];
+				if (parseInt(limit) > response.data.total) {
+					setDisableNextButton(true);
+				} else {
+					setDisableNextButton(false);
+				}
 				dispatch({
 					type: 'SET_DOG_SEARCH_RESPONSE',
 					payload: response.data,
@@ -44,25 +52,10 @@ const SearchResults: FC = () => {
 	};
 
 	const fetchPreviousDogs = () => {
-		if (dogSearchResponse.prev) {
-			scrollToTop();
-			fetchNextOrPrevDogs(dogSearchResponse.prev);
-		}
+		fetchNextOrPrevDogs(dogSearchResponse.prev);
 	};
-
 	const fetchNextDogs = () => {
-		if (dogSearchResponse.next) {
-			const fromParam = dogSearchResponse.next.split('&from=')[1];
-			const sizeParam = dogSearchResponse.next.split('&size=')[1];
-
-			const fromValue = parseInt(fromParam);
-			const sizeValue = parseInt(sizeParam);
-
-			const disableNextButton = fromValue + sizeValue > dogSearchResponse.total;
-			setDisableNextButton(disableNextButton);
-			scrollToTop();
-			fetchNextOrPrevDogs(dogSearchResponse.next);
-		}
+		fetchNextOrPrevDogs(dogSearchResponse.next);
 	};
 
 	const onClickSelectFavorite = (id: string) => {
@@ -118,7 +111,6 @@ const SearchResults: FC = () => {
 						</div>
 					</button>
 				))}
-				<div></div>
 				<div className='flex gap-2 justify-end col-span-full sticky bottom-0 py-1 px-4 -mx-4 bg-[#d4b8e1]'>
 					<button
 						className='text-sm rounded-md px-4 py-2 text-white bg-blue-500 disabled:bg-gray-300 disabled:text-black disabled:font-medium'
