@@ -48,11 +48,11 @@ const Login: FC = () => {
 			{!!error && (
 				<Alert title='Login Error' description={error} alert='danger' />
 			)}
-			<div className='flex flex-col text-center mb-4'>
+			<div className='flex flex-col gap-2 text-center mb-4'>
 				<h1 className='text-2xl font-semibold text-indigo-800'>
 					Welcome to Fetch!
 				</h1>
-				<p className='text-white'>
+				<p className='text-gray-800'>
 					Login to continue and find you next dog companion
 				</p>
 			</div>
@@ -82,7 +82,7 @@ const Login: FC = () => {
 			/>
 
 			<button
-				className='text-sm rounded-md px-4 py-2 text-white bg-blue-500'
+				className='text-sm rounded-md px-4 py-2 text-white bg-blue-600'
 				type='submit'
 				aria-label='Log in'
 			>

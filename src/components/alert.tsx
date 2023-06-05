@@ -38,11 +38,6 @@ export const Alert: FC<AlertProps> = ({
 				<div className='text-sm font-semibold '>{title}</div>
 				<div className='text-sm'>{description}</div>
 			</div>
-			<button
-				className={`absolute right-4 top-2 text-red-400 font-bold ${alertColor.btnColor}`}
-			>
-				&#120;
-			</button>
 		</div>
 	);
 };

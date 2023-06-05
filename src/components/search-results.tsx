@@ -94,6 +94,7 @@ const SearchResults: FC = () => {
 					>
 						<img
 							className='h-28 w-28 object-contain'
+							loading='lazy'
 							src={d.img}
 							alt={d.name + ' the ' + d.breed}
 						/>

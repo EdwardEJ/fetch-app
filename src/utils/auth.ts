@@ -28,17 +28,12 @@ export const login = ({ name, email }: User): Promise<User> => {
 			}
 		)
 		.then((res) => {
-			if (res.status === 200) {
-				alert('Data submitted successfully');
-			}
-
 			const userData: User = res.data;
 
 			return userData;
 		})
 		.catch((error) => {
 			const axiosError = error as AxiosError;
-
 			if (axiosError.response && isErrorResponse(axiosError.response.data)) {
 				throw new Error(axiosError.response.data.message);
 			}

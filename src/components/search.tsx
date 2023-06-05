@@ -88,7 +88,7 @@ const Search: FC = () => {
 				<GenerateMatchButton />
 			</div>
 			<form
-				className={`flex flex-col gap-4 transition-all ${
+				className={`flex flex-col gap-4 transition-all overflow-hidden ${
 					isOpen ? 'max-h-[36rem] opacity-100' : 'max-h-0 opacity-0'
 				}`}
 				onSubmit={handleSubmit(onSubmit)}
