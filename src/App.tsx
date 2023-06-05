@@ -29,7 +29,7 @@ function App() {
 						{matchedDog.name === '' ? (
 							<>
 								<Search />
-								{dogSearchResponse.resultIds.length > 0 ? (
+								{dogSearchResponse?.resultIds?.length > 0 ? (
 									<SearchResults />
 								) : (
 									<NoResults />

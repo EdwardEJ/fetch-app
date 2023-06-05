@@ -5,10 +5,10 @@ import { DogStateContext } from './dog-context-state';
 
 const initialState: State = {
 	dogSearchResponse: {
-		next: null,
-		prev: null,
 		resultIds: [],
 		total: 0,
+		next: '',
+		prev: '',
 	},
 	isLoggedIn: false,
 	userInfo: {
