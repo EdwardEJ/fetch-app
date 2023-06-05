@@ -28,7 +28,6 @@ const Search: FC = () => {
 			})
 			.catch((err) => {
 				const axiosError = err as AxiosError;
-				console.log(axiosError);
 				if (axiosError.response && isErrorResponse(axiosError.response.data)) {
 					throw new Error(axiosError.response.data.message);
 				}
@@ -42,7 +41,6 @@ const Search: FC = () => {
 				params: params,
 			})
 			.then((response: AxiosResponse) => {
-				console.log('response', response);
 				dispatch({
 					type: 'SET_DOG_SEARCH_RESPONSE',
 					payload: response.data,
