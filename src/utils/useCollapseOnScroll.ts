@@ -6,8 +6,9 @@ export const useCollapseOnScroll = () => {
 	useEffect(() => {
 		const handleScroll = () => {
 			const scrollY = window.scrollY;
+			const windowHeight = window.innerHeight;
 
-			if (scrollY > 0) {
+			if (scrollY > windowHeight) {
 				setIsCollapsed(true);
 			} else {
 				setIsCollapsed(false);

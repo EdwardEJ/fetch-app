@@ -3,6 +3,7 @@ import { useEnterAnimation } from './animations/useEnterAnimation';
 import { GenerateMatch } from './components/generate-match';
 import { Header } from './components/header';
 import Login from './components/login';
+import { NoResults } from './components/no-results';
 import Search from './components/search';
 import SearchResults from './components/search-results';
 import useDogContext from './context/useDogContext';
@@ -28,7 +29,11 @@ function App() {
 						{matchedDog.name === '' ? (
 							<>
 								<Search />
-								{dogSearchResponse.resultIds.length > 0 && <SearchResults />}
+								{dogSearchResponse.resultIds.length > 0 ? (
+									<SearchResults />
+								) : (
+									<NoResults />
+								)}
 							</>
 						) : (
 							<GenerateMatch />
