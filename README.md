@@ -1,6 +1,7 @@
 # Fetch App
 
 Fetch App is a React application that allows users to search for dogs based on various parameters such as age, breed, and location. It uses an API to fetch dog data and provides an interactive search interface.
+To login on the hosted website, use any name and password combination to continue to the next page
 
 ## Features
 
